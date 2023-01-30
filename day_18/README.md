@@ -5,4 +5,4 @@ Started off modeling the total space, but realized the just the cubes needed to 
 
 # Part 2
 
-I have no idea.
+Use a breadth first search starting from an empty cube space that is known to be outside object space. Count the number of surfaces contacted.  Have to add empty space around the object so the that BFS can explore all surfaces.

@@ -49,7 +49,6 @@ def viable_neighbors(loc, max_height_climb):
     return neighbors
 
 
-bfs_neighbors = {}
 def breadth_first_search(start, end, max_height_climb):
     global bfs_neighbors
     frontier =  deque([start])
@@ -60,8 +59,6 @@ def breadth_first_search(start, end, max_height_climb):
         if current == end: break
 
         neighbors = viable_neighbors(current, max_height_climb)
-        bfs_neighbors[current] = tuple(neighbors)
-        # bfs_neighbors.append((current, tuple(neighbors)))
         for neighbor in neighbors:
             if neighbor not in came_from:
                 came_from[neighbor] = current
@@ -106,7 +103,6 @@ def dijkstra_neighbors(loc, max_height_climb):
     return neighbors
 
 
-d_neighbors = {}
 def dijkstra_search(start, end, max_height_climb):
     global d_neighbors
     frontier    = [(0, start)]
@@ -118,8 +114,6 @@ def dijkstra_search(start, end, max_height_climb):
         if current[1] == end: break
 
         neighbors = dijkstra_neighbors(current, max_height_climb)
-        d_neighbors[current[1]] = tuple([n[1] for n in neighbors])
-        # d_neighbors.append((current[1], tuple([n[1] for n in neighbors])))
         for neighbor in neighbors:
             new_cost = cost_so_far[current[1]] + neighbor[0]
             if neighbor[1] not in cost_so_far or new_cost < cost_so_far[neighbor[1]]:
