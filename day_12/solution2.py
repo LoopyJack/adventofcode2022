@@ -50,7 +50,6 @@ def viable_neighbors(loc, max_height_climb):
 
 
 def breadth_first_search(start, end, max_height_climb):
-    global bfs_neighbors
     frontier =  deque([start])
     came_from = {start: None}
     
@@ -104,7 +103,6 @@ def dijkstra_neighbors(loc, max_height_climb):
 
 
 def dijkstra_search(start, end, max_height_climb):
-    global d_neighbors
     frontier    = [(0, start)]
     came_from   = {start: None}
     cost_so_far = {start: 0}
