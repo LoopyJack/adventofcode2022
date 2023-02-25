@@ -75,9 +75,8 @@ def breadth_first_search(start, end, max_height_climb):
 
 ########## Dijkstra's search ##########
 """ 
-This section can give the accepeted answer if the heigh_penalty_mult is 1 and
+This section will give the accepeted answer if the heigh_penalty_mult is 1 and
 the heigh_limit is 1 to effectively make an unweighted graph. 
-Just wrote this to learn it.
 """
 def dijkstra_neighbors(loc, max_height_climb):
     x, y = loc[1]
