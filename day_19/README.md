@@ -1,0 +1,8 @@
+
+# Part 1
+
+Started off with a breadth first search but that was clearly too much to calculate so I switched to a depth first search instead.   A dfs was at least able to explore some of the end node space but there are just too many nodes to explore.  I started keeping track of the max possible geodes left and if it was ever less than the current max found; abandon that path.  That definitely made a dent in the number of states to explore, but still wasn't able to finish in a reasonable amount of time.  Next, I started keeping track of the visited nodes.  I originally thought that since time was incremented along every edge traversed, it wouldn't be possible to run into the same state twice.  That was completely wrong.  Once checking for visited nodes was added, the dfs was able to map every blueprint within several seconds.  Still slow, but functional.  My solution was slower than some of those I found online. Another layer of pruning was to only explore geode nodes once it was possible to buy one of those robots, instead of going down the path of buying each possible.  I'm sure I could streamline the next neighbor portion of the dfs function, but it works reasonably well.  By far the biggest time increases were gained from pruning nodes, and I'm confident that many more can be cut back.
+
+# Part 2
+
+As long as part 1 was implented somewhat efficiently this didn't take much longer to run.  Just increase from 24 to 32 and run it again.
