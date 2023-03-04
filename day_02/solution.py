@@ -10,12 +10,12 @@ scores = {
     'C Z': 3+3
 }
 
-with open("./day_02/input.txt", "r") as f:
+with open("input.txt", "r") as f:
     data = f.read().split("\n")
 
 # Part 1
 total_score = sum([scores[game] for game in data])
-print(f"Part 1: {total_score}")
+print(f"Part 1 answer: {total_score}")
 
 # Part 2
 strategies = { # dict of intended outcomes
@@ -38,7 +38,7 @@ strategies = { # dict of intended outcomes
 
 revised_games = [f"{game[0]} {strategies[game[2]][game[0]]}" for game in data]
 total_score = sum([scores[game] for game in revised_games])
-print(f"Part 2: {total_score}")
+print(f"Part 2 answer: {total_score}")
 
 
 
