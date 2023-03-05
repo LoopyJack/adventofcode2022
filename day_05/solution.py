@@ -1,3 +1,5 @@
+import time
+start_time = time.time()
 def create_stacks(txt):
     numStacks = int(txt[-1].replace(' ', '')[-1])
     stacks = [[] for i in range(numStacks)]
@@ -29,18 +31,18 @@ def move_multiple_crates(stacks: list[list[str]], num, from_stack, to_stack):
     stacks[from_stack-1] = stacks[from_stack-1][:-num]
 
 
-with open('./day_05/input.txt') as f:
+with open('input.txt') as f:
     stacks_txt, procedure = [txt.splitlines() for txt in f.read().split('\n\n')]
 
 stacks = create_stacks(stacks_txt)
 ans = get_top_rearrange_stacks(stacks, move_crates)
-print(f"part 1: {ans}")
+print(f"part 1 answer: {ans}")
 
 stacks = create_stacks(stacks_txt)
 ans = get_top_rearrange_stacks(stacks, move_multiple_crates)
-print(f"part 2: {ans}")
-
-
+print(f"part 2 answer: {ans}")
+end_time = time.time()
+print(f"Time: {round((end_time-start_time)*1000, 4)}ms")
 
 
 
