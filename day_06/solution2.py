@@ -1,9 +1,19 @@
 import time
 start_time = time.perf_counter()
 def find_start_idx(start_length: int, message: str):
-    for i in range(len(message)):
-        if len(set(message[i:i+start_length])) == start_length:
-            return i+start_length
+    i = start_length-1
+    while i < len(message):
+        chars = set()
+        j = i
+        while j >= i - start_length:
+            if message[j] in chars:
+                i = j + start_length-1
+                break
+            if j == i-start_length+1:
+                return i+1
+            chars.add(message[j])
+            j -= 1
+        i += 1
 
 with open('input.txt') as f:
     message = f.read()
