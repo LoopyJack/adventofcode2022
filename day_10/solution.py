@@ -1,3 +1,6 @@
+import time
+
+start_time = time.time()
 def incr_cycle1(x: int, cycle: int, result: int):
     cycle += 1
     if cycle == 20 or (cycle-20) % 40 == 0:
@@ -16,7 +19,7 @@ def incr_cycle2(x: int, cycle: int, result: str):
     return cycle, result
 
 
-def run_cycles(incrementer: callable, result: any):
+def run_cycles(incrementer: callable, result):
     x = 1
     cycle = 0
     for line in data:
@@ -30,9 +33,11 @@ def run_cycles(incrementer: callable, result: any):
     return result
 
 
-with open('./day_10/input.txt') as f:
+with open('input.txt') as f:
     data = f.read().splitlines()
 
 print(f"Part 1: {run_cycles(incr_cycle1, 0)}")
 print(f"Part 2: {run_cycles(incr_cycle2, '')}")
-
+elapsed = time.time() - start_time
+end_time = time.time()
+print(f"Time: {round((elapsed)*1000, 4)}ms")
