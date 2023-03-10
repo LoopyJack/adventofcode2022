@@ -1,4 +1,13 @@
+import time
 from dataclasses import dataclass
+
+start_time = time.time()
+
+with open('input.txt') as f:
+    big_string = f.read()
+
+grid = []
+
 
 @dataclass
 class Cell:
@@ -16,7 +25,6 @@ class Cell:
 def look_right(cell):
     i = 0
     for i in range(1, len(grid[cell.y])-cell.x):
-        print(i)
         if grid[cell.y][cell.x+i].height >= cell.height:
             break
     return i
@@ -43,18 +51,10 @@ def look_down(cell):
             break
     return i
 
-
 def calc_area(cell):
     return look_right(cell) * look_left(cell) * look_up(cell) * look_down(cell)
 
 
-
-with open('./day_08/input.txt') as f:
-    big_string = f.read()
-
-
-
-grid = []
 
 for i, line in enumerate(big_string.splitlines()):
     grid.append([])
@@ -66,7 +66,7 @@ for i, line in enumerate(big_string.splitlines()):
 for i, row in enumerate(grid):
     max_height = 0
     for j, cell in enumerate(row):
-        if cell.height > max_height or i == 0 or j == 0:
+        if cell.height > max_height or j == 0:
             cell.vis_from_left = True
             max_height = cell.height
 
@@ -74,7 +74,7 @@ for i, row in enumerate(grid):
 for i, row in enumerate(grid):
     max_height = 0
     for j, cell in enumerate(row[::-1]):
-        if cell.height > max_height or i == 0 or j == 0:
+        if cell.height > max_height or j == 0:
             cell.vis_from_right = True
             max_height = cell.height
 
@@ -82,7 +82,7 @@ for i, row in enumerate(grid):
 for j, col in enumerate(zip(*grid)):
     max_height = 0
     for i, cell in enumerate(col):
-        if cell.height > max_height or i == 0 or j == 0:
+        if cell.height > max_height or i == 0:
             cell.vis_from_top = True
             max_height = cell.height
 
@@ -90,10 +90,9 @@ for j, col in enumerate(zip(*grid)):
 for j, col in enumerate(zip(*grid)):
     max_height = 0
     for i, cell in enumerate(col[::-1]):
-        if cell.height > max_height or i == 0 or j == 0:
+        if cell.height > max_height or i == 0:
             cell.vis_from_bottom = True
             max_height = cell.height
-
 
 # count visible cells:
 visible_cells = 0
@@ -103,19 +102,15 @@ for row in grid:
         if cell.vis_from_left or cell.vis_from_right or cell.vis_from_top or cell.vis_from_bottom:
             visible_cells += 1
 
-
-
-
 #find cell with max area:
 max_area = 0
 for row in grid:
     for cell in row:
         if cell.area > max_area:
-            print(cell)
             max_area = cell.area
             
+print(f"Part 1 answer: {visible_cells}")
+print(f"Part 2 answer: {max_area}")
 
-
-
-print(visible_cells)
-print(max_area)
+end_time = time.time()
+print(f"Time: {round((end_time-start_time)*1000, 4)}ms")
