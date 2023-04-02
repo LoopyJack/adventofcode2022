@@ -1,4 +1,8 @@
-from fast_divide_check import *
+import time
+start_time = time.time()
+
+with open('input.txt') as f:
+    data = f.read().split('\n\n')
 
 class Monkey:
     def __init__(self, input_str: str):
@@ -25,8 +29,6 @@ class Monkey:
                 self.test_false_target = int(items[-1])
         self.inspection_count = 0
         
-
-
     def operation(self, value):
         self.inspection_count += 1
         left = value
@@ -40,9 +42,8 @@ class Monkey:
         elif self._operation_action == '/':
             result = left / right
         else:
-            raise NotImplementedError(f'OMG - action is not defined {self._operation_action}')
-        return result % 9699690
-
+            raise NotImplementedError(f'action is not defined {self._operation_action}')
+        return result 
 
     def test(self, value):
         if value % self.test_divisible_by == 0:
@@ -50,43 +51,24 @@ class Monkey:
         else:
             return self.test_false_target
 
-    def print_items(self):
-        print(f'Monkey {self.num}: {self.items}')   
 
-    def print_inspection_count(self):
-        print(f'Monkey {self.num}: {self.inspection_count}')   
-
-
-def run_round():
-    for monkey in monkeys:
-        for i, item in enumerate(monkey.items):
-            monkey.items[i] = monkey.operation(item)
-            monkeys[monkey.test(monkey.items[i])].items.append(monkey.items[i])
-        monkey.items = []
-
-
-with open('./day_11/input.txt') as f:
-    data = f.read().split('\n\n')
-
-monkeys = [Monkey(monkey) for monkey in data]
-
-m1_counts = []
-for _ in range(10000):
-    run_round()
-    m1_counts.append(monkeys[0].inspection_count)
+def run_rounds(num_rounds, worry_level):
+    monkies = [Monkey(monkey) for monkey in data]
+    mult = worry_level
+    for m in monkies:
+        mult *= m.test_divisible_by
+    for _ in range(num_rounds):
+        for monkey in monkies:
+            for i, item in enumerate(monkey.items):
+                monkey.items[i] = monkey.operation(item) % mult
+                monkies[monkey.test(monkey.items[i]//worry_level)].items.append(monkey.items[i]//worry_level)
+            monkey.items = []
+    inspection_counts = sorted([monkey.inspection_count for monkey in monkies])
+    return inspection_counts[-1] * inspection_counts[-2]
 
 
-print(f'm1 counts: {m1_counts}')
-m1_deltas = [m1_counts[i] - m1_counts[i-1] for i in range(1, len(m1_counts))]
-print(f'm1 deltas: {m1_deltas}')
-
-print('inspection counts')
-for monkey in monkeys:
-    monkey.print_inspection_count()
-
-# 5204 + 11
-
-
-inspection_counts = sorted([monkey.inspection_count for monkey in monkeys])
-monkey_business = inspection_counts[-1] * inspection_counts[-2]
-print(f"monkey business: {monkey_business}")
+print(f"Part 1 answer: {run_rounds(20, 3)}")
+print(f"Part 2 answer: {run_rounds(10000, 1)}")
+elapsed = time.time() - start_time
+end_time = time.time()
+print(f"Time: {round((elapsed)*1000, 4)}ms")
